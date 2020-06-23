@@ -48,16 +48,15 @@ public class CodeGenerator {
         }
         JDefinedClass jDefinedClass = codeModel._class(qualifiedClassName);
         generatedClass = new GeneratedClass(codeModel, jDefinedClass);
-        jDefinedClass.annotate(Root.class).param("name", name);
+        jDefinedClass.annotate(Root.class).param("name", name).param("strict", false);
         jDefinedClass.annotate(Namespace.class).param("reference", namespace);
         jDefinedClass.constructor(JMod.PUBLIC);
 
         JDocComment jDocComment = jDefinedClass.javadoc();
         jDocComment.add(className);
-        jDocComment.add("<br>\n");
-        jDocComment.add("Generated using Android JAXB");
-        jDocComment.add("<br>\n");
-        jDocComment.add("@link https://github.com/yeshodhan/android-jaxb");
+        jDocComment.add(" model Object/XML Mapping.");
+        jDocComment.add("\n<br>\n");
+        jDocComment.add("Generated using CodeGenerator.");
 
         generatedClasses.put(qualifiedClassName, generatedClass);
         return generatedClass;

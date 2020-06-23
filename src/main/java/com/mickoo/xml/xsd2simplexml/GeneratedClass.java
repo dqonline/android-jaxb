@@ -34,7 +34,7 @@ public class GeneratedClass {
 
         if(properties.contains(fieldName)) return;
 
-        if(minOccurs > 1 || unbounded) {
+        if(minOccurs > 1 || unbounded) { // unbounded is true when maxOccurs = -1 || maxOccurs > 1
 
             JClass propertyClass = (JClass) type;
             JClass listClass = codeModel.ref(List.class);
@@ -49,7 +49,7 @@ public class GeneratedClass {
                 jAnnotationUse.param("required", false);
                 addGetterSetter(jField, fieldName, type, false);
             } else if(minOccurs == 1){
-                jAnnotationUse.param("required", false);
+                jAnnotationUse.param("required", false); //shoulda been true - let it be!
                 addGetterSetter(jField, fieldName, type, false);
             }
 
@@ -76,7 +76,7 @@ public class GeneratedClass {
                 jAnnotationUse.param("required", false);
                 addGetterSetter(jField, fieldName, type, false);
             } else if(minOccurs == 1){
-                jAnnotationUse.param("required", false);
+                jAnnotationUse.param("required", false); //shoulda been true - same as line 52
                 addGetterSetter(jField, fieldName, type, false);
             }
         }

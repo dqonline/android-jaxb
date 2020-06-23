@@ -43,7 +43,7 @@ public class SchemaParser {
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(xmlSchema);
         doc.getDocumentElement().normalize();
-        XMLParser xmlParser = new JAXPParser();
+        XMLParser xmlParser = new JAXPParser(javax.xml.parsers.SAXParserFactory.newInstance());
         XSOMParser parser = new XSOMParser(xmlParser);
         parser.parse(xmlSchema);
 
@@ -218,8 +218,10 @@ public class SchemaParser {
             newParseContext.indent = parseContext.indent + "\t";
             newParseContext.path = parseContext.path;
             newParseContext.currentClass = parseContext.currentClass;
-            particle.setMaxOccurs(BigInteger.valueOf(parseContext.maxOccurs.intValue()));
-            particle.setMinOccurs(BigInteger.valueOf(parseContext.minOccurs.intValue()));
+//            particle.setMaxOccurs(BigInteger.valueOf(parseContext.maxOccurs.intValue())); //no need to set particle
+//            particle.setMinOccurs(BigInteger.valueOf(parseContext.minOccurs.intValue())); //unless check compositor
+            newParseContext.minOccurs = particle.getMinOccurs().intValue(); //already set in processParticle()
+            newParseContext.maxOccurs = particle.getMaxOccurs().intValue(); //but setting here is OK anyway
             processParticle(particle, newParseContext);
         }
         logger.info(parseContext.indent + "[End of " + modelGroup.getCompositor() + "]");
@@ -346,7 +348,7 @@ public class SchemaParser {
 
     protected void processElement(XSElementDecl element, ParseContext parseContext) throws Exception {
         parseContext.path += "/" + element.getName();
-        System.out.print(parseContext.indent + "[Element " + parseContext.path + "   " + parseContext.getOccurs() + "] of type [" + element.getType().getName() + "]");
+        System.out.println(parseContext.indent + "[Element " + parseContext.path + "]   " + parseContext.getOccurs() + " of type [" + element.getType().getName() + "]");
         if (element.getType().isComplexType()) {
 
             GeneratedClass parentClass = parseContext.currentClass;
