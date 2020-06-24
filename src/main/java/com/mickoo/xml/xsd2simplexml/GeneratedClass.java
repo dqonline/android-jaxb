@@ -8,6 +8,7 @@ import org.simpleframework.xml.Text;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -102,6 +103,16 @@ public class GeneratedClass {
         JMethod setterMethod = generatedClass.method(JMod.PUBLIC, codeModel.VOID, "set" + propertyName);
         setterMethod.param(jField.type(), name);
         setterMethod.body().assign(JExpr._this().ref(name), JExpr.ref(name));
+    }
+
+    public void addConstructor(Map<String, JFieldVar> fieldsMap) {
+        JMethod allArgsCtor = generatedClass.constructor(JMod.PUBLIC);
+        if (fieldsMap != null && fieldsMap.size() > 0) {
+            for (String name : fieldsMap.keySet()) {
+                allArgsCtor.param(fieldsMap.get(name).type(), name);
+                allArgsCtor.body().assign(JExpr._this().ref(name), JExpr.ref(name));
+            }
+        }
     }
 
     public JDefinedClass getGeneratedClass() {

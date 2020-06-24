@@ -3,6 +3,7 @@ package com.mickoo.xml.xsd2simplexml;
 import com.mickoo.xml.xsd2simplexml.bindings.Bindings;
 import com.mickoo.xml.xsd2simplexml.bindings.EnumBinding;
 import com.sun.codemodel.JCodeModel;
+import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;
 import com.sun.xml.xsom.*;
 import com.sun.xml.xsom.parser.JAXPParser;
@@ -387,6 +388,24 @@ public class SchemaParser {
             addSimpleType(element.getName(), element.getType().asSimpleType(), parseContext, ElementType.ELEMENT);
 
         }
+
+        if (parseContext.currentClass != null && parseContext.currentClass.generatedClass != null) {
+            //System.out.println("All args constructor support");
+            Iterator iterator = parseContext.currentClass.generatedClass.constructors();
+            while (iterator.hasNext()) {
+                JMethod method = (JMethod) iterator.next();
+                if (method.listParams() != null && method.listParams().length > 0) {
+                    if (method.listParams().length <= parseContext.currentClass.generatedClass.fields().size()) {
+                        iterator.remove();
+                    }
+                }
+            }
+            if (parseContext.currentClass.generatedClass.fields() != null
+                    && parseContext.currentClass.generatedClass.fields().size() > 0) {
+                parseContext.currentClass.addConstructor(parseContext.currentClass.generatedClass.fields());
+            }
+        }
+
     }
 
 }
