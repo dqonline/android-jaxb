@@ -5,7 +5,7 @@ Use this library to generate SimpleXML annotated Java classes from simple XSD fi
 
 ### Features
 
- * Works well with Android
+ * Works well with Android, as well as Retrofit (XML converter).
  * Creates JAXB like Class, Property and Method names.
  * Support Enums and Attributes.
  * Customize generated code using a JSON bindings file.
@@ -810,7 +810,9 @@ public class Phone {
 
 
 ## Contact
-Drop a note to yeshodhan.kulkarni@gmail.com or raise an issue if anyone needs support for more complex schemas.
+Drop a note to original author: yeshodhan.kulkarni@gmail.com or maintainer: ducquoc.vn@gmail.com .
+
+You can also raise an issue in Git repository: https://github.com/ducquoc/android-jaxb .
 
 ## License
 

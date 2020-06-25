@@ -8,6 +8,7 @@
     <artifactId>android-jaxb</artifactId>
     <version>1.0.20200601</version>
     <packaging>jar</packaging>
+    <url>https://github.com/ducquoc/android-jaxb</url>
 
     <dependencies>
         <dependency>

@@ -10,6 +10,12 @@
 # gradle
 .gradle/
 
+# Avoid ignore gradle wrapper jar
+!gradle-wrapper.jar
+
+# ignore Maven wrapper jar
+maven-wrapper.jar
+
 # eclipse
 .classpath
 .project
@@ -26,3 +32,12 @@ bin/
 
 #vscode
 .vscode/*
+
+# Log file
+*.log
+
+# Temp files
+~$*.xlsx
+*.lock
+*.swap
+

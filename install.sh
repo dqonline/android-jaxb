@@ -13,6 +13,8 @@ INSTALL_DIR="${INSTALL_DIR_BASE}/android-jaxb"
 TMP_DIR="/tmp/$USER_WHOAMI"
 JAR_FILE="android-jaxb-1.0.20200601-jar-with-dependencies.jar"
 DOWNLOAD_URL="https://sites.google.com/site/ducquocvn/home/${JAR_FILE}"
+HEADWAY_URL="https://github.com/ducquoc/fresher-training/tree/master/java-hardway-core"
+AUTOMATION_URL="https://github.com/ducquoc/fresher-training/tree/master/qa-automation-browser"
 
 mkdir -p ${INSTALL_DIR}
 mkdir -p ${TMP_DIR}
