@@ -1,3 +1,28 @@
 .idea
 *.iml
 /target
+# idea
+#*.idea
+#*.iml
+*.ipr
+*.iws
+
+# gradle
+.gradle/
+
+# eclipse
+.classpath
+.project
+.settings/
+.sts4-cache/
+#target/
+build/
+out/
+bin/
+
+# Mac index file
+.DS_Store
+**/.DS_Store
+
+#vscode
+.vscode/*

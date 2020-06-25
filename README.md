@@ -22,12 +22,16 @@ It's straight and simple as of now, and does not support multiple XSDs, inherita
 
 ### Usage
 
- * Download the Android JAXB executable jar file from : https://s3.amazonaws.com/yeshodhan/android-jaxb-1.0.1.jar
- * Run > java -jar android-jaxb-1.0.1.jar [options] your-schema-file.xsd
+ * Download the Android JAXB executable jar file from : https://sites.google.com/site/ducquocvn/home/android-jaxb-1.0.20200601-jar-with-dependencies.jar
+ (or build skipTests: `mvn clean install -DskipTests` and find in folder `target` )
+ * Run `$ java -jar android-jaxb-1.0.20200601-jar-with-dependencies.jar [options] your-schema-file.xsd`
  * See sample usage below:
- 
+
+> candy-philosophy:android-jaxb ducquoc$ java -jar android-jaxb-1.0.20200601-jar-with-dependencies.jar --help
+
+==>
+
 ```bash
-➜  target git:(master) ✗ java -jar android-jaxb-1.0.1.jar --help
 usage: java -jar android-jaxb-1.0.jar [options] your-schema-file.xsd
 ---------------------------------------------------------------------
  -b,--bindings <arg>      (optional) bindings JSON file
@@ -37,9 +41,14 @@ usage: java -jar android-jaxb-1.0.jar [options] your-schema-file.xsd
                           com.example.app
  -v,--version             Version
 ---------------------------------------------------------------------
-➜  target git:(master) ✗ java -jar android-jaxb-1.0.1.jar -b /Users/yeshodhan/projects/xsd-to-simplexml/src/test/resources/bindings.json -d /Users/yeshodhan/projects/xsd-to-simplexml/src/test/java -p com.mickoo.person /Users/yeshodhan/projects/xsd-to-simplexml/src/test/resources/person.xsd
+```
+
+> candy-philosophy:android-jaxb ducquoc$ java -jar target/android-jaxb-1.0.20200601-jar-with-dependencies.jar -d target/generated-sources -p dtest src/test/resources/vast_2.0.1.xsd
+
+==>
+```
 Reading bindings ...
-Code Generator Initialized. Destination Directory: /Users/yeshodhan/projects/xsd-to-simplexml/src/test/java
+Code Generator Initialized. Destination Directory: /Users/ducquoc/github/android-jaxb/target/generated-sources
 [Element /Person    Min Occurs: null, Max Occurs: null ] of type [Person][Start of sequence Min Occurs: 1, Max Occurs: 1 ]
 	[Element /Person/FirstName    Min Occurs: 0, Max Occurs: 1 ] of type [string]
 	[Element /Person/LastName    Min Occurs: 0, Max Occurs: 1 ] of type [string]
@@ -60,25 +69,27 @@ Code Generator Initialized. Destination Directory: /Users/yeshodhan/projects/xsd
 [End of sequence]
 [Attribute /Person/@id    Min Occurs: 0, Max Occurs: 1 ] of type [string]
 Schema parsing complete.
-Generating classes under /Users/yeshodhan/projects/xsd-to-simplexml/src/test/java
-com/mickoo/person/Address.java
-com/mickoo/person/Addresses.java
-com/mickoo/person/Fruits.java
-com/mickoo/person/GenderEnum.java
-com/mickoo/person/Person.java
+Generating classes under /Users/ducquoc/github/android-jaxb/target/generated-sources
+dtest/Address.java
+dtest/Addresses.java
+dtest/Fruits.java
+dtest/GenderEnum.java
+dtest/Person.java
 Android JAXB execution complete. Generated 5 classes in 315 milliseconds.
 Please verify the generated classes for compile errors and syntax issues.
 ``` 
 
  * If you want to run it from any directory, download install.sh file and run > sudo ./install.sh to download and install. Android jaxb will be available in your path.
- 
+
+> candy-philosophy:android-jaxb ducquoc$ sudo ./install.sh
+
+==>
 ```bash
-➜  xsd-to-simplexml git:(master) ✗ sudo ./install.sh
-Downloading AndroidJAXB from https://s3.amazonaws.com/yeshodhan/android-jaxb-1.0.1.jar
+Downloading AndroidJAXB from https://sites.google.com/site/ducquocvn/home/android-jaxb-1.0.20200601-jar-with-dependencies.jar
 % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                               Dload  Upload   Total   Spent    Left  Speed
-100 2444k  100 2444k    0     0   463k      0  0:00:05  0:00:05 --:--:--  537k
-Installing ...
+100 2314k  100 2314k    0     0   463k      0  0:00:05  0:00:05 --:--:--  537k
+Installing to /opt/ducquoc/android-jaxb ...
 Installation Complete
 usage: java -jar android-jaxb-1.0.1.jar [options] your-schema-file.xsd
 ---------------------------------------------------------------------
@@ -237,7 +248,7 @@ usage: java -jar android-jaxb-1.0.1.jar [options] your-schema-file.xsd
 #### Generated Java Classes
 
 ```java
-package com.mickoo.person;
+package dtest;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Namespace;
@@ -245,9 +256,9 @@ import org.simpleframework.xml.Root;
 
 
 /**
- * Address<br>
- * Generated using Android JAXB<br>
- * @link https://github.com/yeshodhan/android-jaxb
+ * Address model Object/XML Mapping.
+ * <br>
+ * Generated using CodeGenerator.
  *
  */
 @Root(name = "Address")
@@ -320,7 +331,7 @@ public class Address {
 
 }
 
-package com.mickoo.person;
+package dtest;
 
 import java.util.List;
 import org.simpleframework.xml.ElementList;
@@ -329,9 +340,9 @@ import org.simpleframework.xml.Root;
 
 
 /**
- * Addresses<br>
- * Generated using Android JAXB<br>
- * @link https://github.com/yeshodhan/android-jaxb
+ * Addresses model Object/XML Mapping.
+ * <br>
+ * Generated using CodeGenerator.
  *
  */
 @Root(name = "Addresses")
@@ -354,7 +365,7 @@ public class Addresses {
 
 }
 
-package com.mickoo.person;
+package dtest;
 
 import org.simpleframework.xml.Namespace;
 import org.simpleframework.xml.Root;
@@ -375,7 +386,7 @@ public enum Fruits {
 
 }
 
-package com.mickoo.person;
+package dtest;
 
 import org.simpleframework.xml.Namespace;
 import org.simpleframework.xml.Root;
@@ -405,7 +416,7 @@ public enum GenderEnum {
 
 }
 
-package com.mickoo.person;
+package dtest;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Namespace;
@@ -413,9 +424,9 @@ import org.simpleframework.xml.Root;
 
 
 /**
- * Movie<br>
- * Generated using Android JAXB<br>
- * @link https://github.com/yeshodhan/android-jaxb
+ * Movie model Object/XML Mapping.
+ * <br>
+ * Generated using CodeGenerator.
  *
  */
 @Root(name = "Movie")
@@ -448,7 +459,7 @@ public class Movie {
 
 }
 
-package com.mickoo.person;
+package dtest;
 
 import java.util.List;
 import org.simpleframework.xml.Attribute;
@@ -459,9 +470,9 @@ import org.simpleframework.xml.Root;
 
 
 /**
- * Person<br>
- * Generated using Android JAXB<br>
- * @link https://github.com/yeshodhan/android-jaxb
+ * Person model Object/XML Mapping.
+ * <br>
+ * Generated using CodeGenerator.
  *
  */
 @Root(name = "Person")
@@ -584,7 +595,7 @@ public class Person {
 
 }
 
-package com.mickoo.person;
+package dtest;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Namespace;
@@ -593,9 +604,9 @@ import org.simpleframework.xml.Text;
 
 
 /**
- * Pet<br>
- * Generated using Android JAXB<br>
- * @link https://github.com/yeshodhan/android-jaxb
+ * Pet model Object/XML Mapping.
+ * <br>
+ * Generated using CodeGenerator.
  *
  */
 @Root(name = "Pet")
@@ -628,7 +639,7 @@ public class Pet {
 
 }
 
-package com.mickoo.person;
+package dtest;
 
 import java.util.List;
 import org.simpleframework.xml.ElementList;
@@ -637,9 +648,9 @@ import org.simpleframework.xml.Root;
 
 
 /**
- * Pets<br>
- * Generated using Android JAXB<br>
- * @link https://github.com/yeshodhan/android-jaxb
+ * Pets model Object/XML Mapping.
+ * <br>
+ * Generated using CodeGenerator.
  *
  */
 @Root(name = "Pets")
@@ -662,7 +673,7 @@ public class Pets {
 
 }
 
-package com.mickoo.person;
+package dtest;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Namespace;
@@ -671,13 +682,13 @@ import org.simpleframework.xml.Text;
 
 
 /**
- * Phone<br>
- * Generated using Android JAXB<br>
- * @link https://github.com/yeshodhan/android-jaxb
+ * Phone model Object/XML Mapping.
+ * <br>
+ * Generated using CodeGenerator.
  *
  */
 @Root(name = "Phone")
-@Namespace(reference = "http://person.mickoo.com/")
+@Namespace(reference = "http://www.ducquoc.net/")
 public class Phone {
 
     @Text(required = true)
@@ -762,7 +773,7 @@ public class Phone {
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<Person id="1001" xmlns="http://person.mickoo.com/">
+<Person id="1001" xmlns="http://www.ducquoc.net/">
    <Email>johndoe@example.com</Email>
    <FirstName>John</FirstName>
    <LastName>Doe</LastName>

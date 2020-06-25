@@ -2,23 +2,33 @@
 
 set -e
 
-INSTALL_DIR_BASE="/usr/lib/mickoo"
+USER_WHOAMI="ducquoc"
+#USER_WHOAMI="`whoami`"
+#USER_HOME="/Users/ducquoc"
+USER_HOME="$HOME"
+#INSTALL_DIR_BASE="/usr/share/$USER_WHOAMI"
+INSTALL_DIR_BASE="/opt/$USER_WHOAMI"
 INSTALL_DIR="${INSTALL_DIR_BASE}/android-jaxb"
-TMP_DIR="/tmp/mickoo/androidjaxb"
-JAR_FILE="android-jaxb-1.0.1.jar"
-DOWNLOAD_URL="https://s3.amazonaws.com/yeshodhan/${JAR_FILE}"
+#TMP_DIR="/tmp/ducquoc"
+TMP_DIR="/tmp/$USER_WHOAMI"
+JAR_FILE="android-jaxb-1.0.20200601-jar-with-dependencies.jar"
+DOWNLOAD_URL="https://sites.google.com/site/ducquocvn/home/${JAR_FILE}"
 
 mkdir -p ${INSTALL_DIR}
 mkdir -p ${TMP_DIR}
 cd ${TMP_DIR}
 echo "Downloading AndroidJAXB from ${DOWNLOAD_URL}"
-curl -O "${DOWNLOAD_URL}"
-echo "Installing ..."
-mv ${JAR_FILE} ${INSTALL_DIR}
+curl -L -O "${DOWNLOAD_URL}"
+echo "Installing to ${INSTALL_DIR} ..."
+[ -f ${JAR_FILE} ] && mv ${JAR_FILE} ${INSTALL_DIR}
 cd ${INSTALL_DIR}
-echo "java -jar ${INSTALL_DIR}/${JAR_FILE} \"\$@\"" > androidjaxb
-#rm /usr/bin/androidjaxb
-ln -n androidjaxb /usr/bin/androidjaxb
-chmod +x /usr/bin/androidjaxb
+chmod +x ${INSTALL_DIR}/${JAR_FILE}
+echo "java -jar ${INSTALL_DIR}/${JAR_FILE} \"\$@\"" > androidjaxb.sh
+chmod +x ${INSTALL_DIR}/androidjaxb.sh
+rm -f ${INSTALL_DIR}/androidjaxb && ln -sf ${INSTALL_DIR}/androidjaxb.sh androidjaxb
+#ln -n androidjaxb ${INSTALL_DIR}/androidjaxb.sh
+#chmod +x ${INSTALL_DIR}/androidjaxb
 echo "Installation Complete"
-androidjaxb
+PATH=${INSTALL_DIR}:$PATH
+#"${INSTALL_DIR}"/androidjaxb
+androidjaxb.sh

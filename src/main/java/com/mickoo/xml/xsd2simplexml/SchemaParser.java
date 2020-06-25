@@ -27,6 +27,7 @@ import java.util.*;
  */
 public class SchemaParser {
 
+    public static final String INDENT_UNIT = " ";//"\t";
     private static final Logger logger = Logger.getLogger(SchemaParser.class);
 
     private CodeGenerator codeGenerator;
@@ -64,6 +65,10 @@ public class SchemaParser {
     }
 
     public void parse() throws Exception {
+        if (schema == null || schema.getElementDecls() == null) {
+            System.out.println("Empty schema elements (though might have types).");
+            return;
+        }
         for (XSElementDecl element : schema.getElementDecls().values()) {
             ParseContext parseContext = new ParseContext();
             processElement(element, parseContext);
@@ -135,14 +140,14 @@ public class SchemaParser {
                 patternValues = patternValues.substring(0, patternValues.lastIndexOf('|'));
             }
             String retval = "";
-            retval += maxValue == null ? "" : "[MaxValue  = " + maxValue + "]\t";
-            retval += minValue == null ? "" : "[MinValue  = " + minValue + "]\t";
-            retval += maxLength == null ? "" : "[MaxLength = " + maxLength + "]\t";
-            retval += minLength == null ? "" : "[MinLength = " + minLength + "]\t";
-            retval += pattern == null ? "" : "[Pattern(s) = " + patternValues + "]\t";
-            retval += totalDigits == null ? "" : "[TotalDigits = " + totalDigits + "]\t";
-            retval += length == null ? "" : "[Length = " + length + "]\t";
-            retval += enumeration == null ? "" : "[Values = " + enumValues + "]\t";
+            retval += maxValue == null ? "" : "[MaxValue  = " + maxValue + "]" + INDENT_UNIT;
+            retval += minValue == null ? "" : "[MinValue  = " + minValue + "]" + INDENT_UNIT;
+            retval += maxLength == null ? "" : "[MaxLength = " + maxLength + "]" + INDENT_UNIT;
+            retval += minLength == null ? "" : "[MinLength = " + minLength + "]" + INDENT_UNIT;
+            retval += pattern == null ? "" : "[Pattern(s) = " + patternValues + "]" + INDENT_UNIT;
+            retval += totalDigits == null ? "" : "[TotalDigits = " + totalDigits + "]" + INDENT_UNIT;
+            retval += length == null ? "" : "[Length = " + length + "]" + INDENT_UNIT;
+            retval += enumeration == null ? "" : "[Values = " + enumValues + "]" + INDENT_UNIT;
 
             return retval;
         }
@@ -216,7 +221,7 @@ public class SchemaParser {
         logger.info(parseContext.indent + "[Start of " + modelGroup.getCompositor() + parseContext.getOccurs() + "]");
         for (XSParticle particle : modelGroup.getChildren()) {
             ParseContext newParseContext = new ParseContext();
-            newParseContext.indent = parseContext.indent + "\t";
+            newParseContext.indent = parseContext.indent + INDENT_UNIT;
             newParseContext.path = parseContext.path;
             newParseContext.currentClass = parseContext.currentClass;
 //            particle.setMaxOccurs(BigInteger.valueOf(parseContext.maxOccurs.intValue())); //no need to set particle
@@ -349,7 +354,8 @@ public class SchemaParser {
 
     protected void processElement(XSElementDecl element, ParseContext parseContext) throws Exception {
         parseContext.path += "/" + element.getName();
-        System.out.println(parseContext.indent + "[Element " + parseContext.path + "]   " + parseContext.getOccurs() + " of type [" + element.getType().getName() + "]");
+        System.out.println(parseContext.indent + "[Element " + parseContext.path + "]   " + parseContext.getOccurs()
+                + " of type [" + (element.getType().getName() == null ? "COMPLEX" : element.getType().getName()) + "]");
         if (element.getType().isComplexType()) {
 
             GeneratedClass parentClass = parseContext.currentClass;
